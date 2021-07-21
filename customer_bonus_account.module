@@ -1,0 +1,50 @@
+<?php
+
+/**
+ * @file
+ * Customer bonus account
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function customer_bonus_account_menu()
+{
+	$items['user/%/customer-bonus-account'] = array(
+		'title' => t('Бонусный счёт'),
+		'description' => t('Бонусный счёт'),
+		'weight' => 100,
+		'page callback' => 'customer_bonus_account_page',
+		'access callback' => 'check_roles',
+		'access arguments' => array(array('administrator', 'customer')),
+		'type' => MENU_LOCAL_TASK
+	);
+	
+	$items['user/%/customer-bonus-withdrawal'] = array(
+		'title' => t('Вывод бонусов'),
+		'description' => t('Вывод бонусов'),
+		'weight' => 110,
+		'page callback' => 'customer_bonus_account_withdrawal_page',
+		'access callback' => 'check_roles',
+		'access arguments' => array(array('administrator', 'customer')),
+		'type' => MENU_LOCAL_TASK
+	);
+	
+	$items['user/%/booker-feedback'] = array(
+		'title' => t('Связь с бухгалтером'),
+		'description' => t('Связь с бухгалтером'),
+		'weight' => 120,
+		'page callback' => 'booker_feedback_page',
+		'access callback' => 'check_roles',
+		'access arguments' => array(array('administrator', 'customer')),
+		'type' => MENU_LOCAL_TASK
+	);
+	
+	return $items;
+}
+
+module_load_include('inc', 'customer_bonus_account', 'includes/customer_bonus_account_page');
+
+module_load_include('inc', 'customer_bonus_account', 'includes/customer_bonus_account_withdrawal_page');
+
+module_load_include('inc', 'customer_bonus_account', 'includes/booker_feedback_page');
